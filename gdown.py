@@ -17,7 +17,7 @@ CHAT_ID = '1970794348'
 parser = argparse.ArgumentParser(description='google rive upload and download')
 parser.add_argument("-l", "--links", help="Prints the supplied argument.", nargs='*')
 args = parser.parse_args()
-
+# args = ["https://drive.google.com/file/d/=1AdAr9-iMYD4wd-N-nzU8bcIs0ss5LnSC"]
 
 # gdrive settings
 scope = ["https://www.googleapis.com/auth/drive"]
@@ -62,21 +62,29 @@ def send_message(bot_token, chat_id, message):
     data = {'chat_id': chat_id, 'text': message, 'disable_web_page_preview': True}
     response = requests.post(send_message_url, data=data)
     return response
-# l = ['https://drive.google.com/u/0/uc?id=1Mk9gAUsYmXwUpzOPg9emtnD_Labvw1LR']s
+
 remember = {}
 for arg in args.links:
     link = arg.split('=')[1]
     try:
         file = drive.CreateFile({'id': link})
         name = file['title']
-        print("Downloading", name)
         name = handle_domain(name)
+        print("Downloading", name)
         file.GetContentFile(name, acknowledge_abuse=True)
-        print("Uploading gdrive", name)
-        onedrive = subprocess.check_output(['rclone', 'copy', name, 'one:Public/2023/Jan/' + date.today().strftime('%d')])
         print("Uploading pixeldrain", name)
-        pixel_drain = subprocess.check_output(['curl', '-g', 'https://pixeldrain.com/api/file/', '-u:8e312a99-f6af-4e4d-bd43-04721db3fb61', '--upload-file', name])
-        print(pixel_drain)
+        server = requests.get("https://api.gofile.io/getServer")
+        server = server.json()["data"]["server"]
+        files = {'file': open(name, 'rb'),
+                'token': (None, 'nrjNg7USiVmujjHkXYlDq9RYOvAnDL7S'),
+                }
+        pixeldrain = requests.post(f'https://{server}.gofile.io/uploadFile', files=files)
+        pixel_link = pixeldrain.json()["data"]["downloadPage"]
+        print("Uploading gdrive", name)
+        onedrive = subprocess.check_output(['rclone', 'copy', name, 'one:Public/2023/Feb/' + date.today().strftime('%d')])
+        # onedrive
+        # pixel_link
+        # print(pixel_link)
         
         if name[:6].lower().strip() in remember.keys():
             remember[name[:6].lower().strip()]
@@ -91,17 +99,15 @@ for arg in args.links:
         # elif '1080p' in name:
         #     all_links[name[:6]][1080] = data
         # try:
-        pixel_link = json.loads(pixel_drain.decode().replace('\n', ''))['id']
-        print(pixel_link)
         if '480p' in name:
-            all_link[name[:6].lower().strip()] = all_link[name[:6].lower().strip()].replace('480_r', f'https://pixeldrain.com/u/{pixel_link}')
-            all_link[name[:6].lower().strip()] = all_link[name[:6].lower().strip()].replace('480p_r', 'https://allinonepaid.vercel.app/Public/2023/Jan/'+date.today().strftime('%d')+'/'+name.replace(' ', '%20'))
+            all_link[name[:6].lower().strip()] = all_link[name[:6].lower().strip()].replace('480_r', f'{pixel_link}')
+            all_link[name[:6].lower().strip()] = all_link[name[:6].lower().strip()].replace('480p_r', 'https://allinonepaid.vercel.app/Public/2023/Feb/'+date.today().strftime('%d')+'/'+name.replace(' ', '%20'))
         if '720p' in name:
-            all_link[name[:6].lower().strip()] = all_link[name[:6].lower().strip()].replace('720_r', f'https://pixeldrain.com/u/{pixel_link}')
-            all_link[name[:6].lower().strip()] = all_link[name[:6].lower().strip()].replace('720p_r', 'https://allinonepaid.vercel.app/Public/2023/Jan/'+date.today().strftime('%d')+'/'+name.replace(' ', '%20'))
+            all_link[name[:6].lower().strip()] = all_link[name[:6].lower().strip()].replace('720_r', f'{pixel_link}')
+            all_link[name[:6].lower().strip()] = all_link[name[:6].lower().strip()].replace('720p_r', 'https://allinonepaid.vercel.app/Public/2023/Feb/'+date.today().strftime('%d')+'/'+name.replace(' ', '%20'))
         if '1080p' in name:
-            all_link[name[:6].lower().strip()] = all_link[name[:6].lower().strip()].replace('1080_r', f'https://pixeldrain.com/u/{pixel_link}')
-            all_link[name[:6].lower().strip()] = all_link[name[:6].lower().strip()].replace('1080p_r', 'https://allinonepaid.vercel.app/Public/2023/Jan/'+date.today().strftime('%d')+'/'+name.replace(' ', '%20'))
+            all_link[name[:6].lower().strip()] = all_link[name[:6].lower().strip()].replace('1080_r', f'{pixel_link}')
+            all_link[name[:6].lower().strip()] = all_link[name[:6].lower().strip()].replace('1080p_r', 'https://allinonepaid.vercel.app/Public/2023/Feb/'+date.today().strftime('%d')+'/'+name.replace(' ', '%20'))
     except Exception as e:
         print(e)
     try:
@@ -117,4 +123,3 @@ try:
         send_message(BOT_TOKEN, CHAT_ID, new_message)
 except:
     pass
-
