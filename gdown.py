@@ -74,12 +74,12 @@ for arg in args.links:
         file.GetContentFile(name, acknowledge_abuse=True)
         print("Uploading pixeldrain", name)
         server = requests.get("https://api.gofile.io/getServer")
-        server = server.json()["data"]["server"]
-        files = {'file': open(name, 'rb'),
-                'token': (None, 'nrjNg7USiVmujjHkXYlDq9RYOvAnDL7S'),
-                }
-        pixeldrain = requests.post(f'https://{server}.gofile.io/uploadFile', files=files)
-        pixel_link = pixeldrain.json()["data"]["downloadPage"]
+        server_p = server.json()["data"]["server"]
+        server = f"https://{server_p}.gofile.io/uploadFile"
+        files = f"file=@{name}"
+        token = "token=nrjNg7USiVmujjHkXYlDq9RYOvAnDL7S"
+        pixeldrain = subprocess.check_output(["curl", "-F", files, "-F", token, server])
+        pixel_link = json.loads(pixeldrain.decode())["data"]["downloadPage"]
         print("Uploading gdrive", name)
         onedrive = subprocess.check_output(['rclone', 'copy', name, 'one:Public/2023/Feb/' + date.today().strftime('%d')])
         # onedrive
