@@ -16,8 +16,7 @@ RUN apt-get -qq install -y --no-install-recommends \
     wget2 \
     rclone \
     aria2 \
-    ffmpeg \
-    firefox
+    ffmpeg 
 
 # install chrome
 RUN mkdir -p /tmp/ && \
