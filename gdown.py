@@ -73,8 +73,14 @@ for arg in args.links:
         print("Downloading", name)
         file.GetContentFile(name, acknowledge_abuse=True)
         print("Uploading pixeldrain", name)
-        server = requests.get("https://api.gofile.io/getServer")
-        server_p = server.json()["data"]["server"]
+        while done:
+            try:
+                server = requests.get("https://api.gofile.io/getServer")
+                server_p = server.json()["data"]["server"]
+                done = False
+                print(server_p)
+            except:
+                pass
         server = f"https://{server_p}.gofile.io/uploadFile"
         files = f"file=@{name}"
         token = "token=nrjNg7USiVmujjHkXYlDq9RYOvAnDL7S"
