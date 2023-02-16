@@ -73,6 +73,7 @@ for arg in args.links:
         print("Downloading", name)
         file.GetContentFile(name, acknowledge_abuse=True)
         print("Uploading pixeldrain", name)
+        done = True
         while done:
             try:
                 server = requests.get("https://api.gofile.io/getServer")
