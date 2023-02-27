@@ -44,15 +44,17 @@ def handle_domain(string: str):
                 message += word + ' '
         else:
             message += word + ' '
+    # return message
     if message.strip().replace('  ', ' ').endswith('.mkv') or message.strip().replace('  ', ' ').endswith('.mp4'):
+        if r'[MoviesFD]' in message: 
+            return message.strip().replace('.', ' ').replace(r'[MoviesFD]', '').strip() + ".mkv"
         message2 = message.strip().replace('.mkv', '').replace('.mp4', '').split(' ')[-1]
         if '.' in message2:
             return message.strip().replace(message2, ' ').replace('  ', ' ').replace('  ', ' ').replace(r'[MovieFD]', '').strip()
         else:
-           return message.strip().replace('  ', ' ').replace(r'[MovieFD]', '').strip()
+            return message.strip().replace('  ', ' ').replace(r'[MovieFD]', '').strip()
     else:
         return message.strip().replace('  ', ' ').replace(r'[MovieFD]', '') + '.mkv'
-
 
 
 # loop for handling update and function for message
