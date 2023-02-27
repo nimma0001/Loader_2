@@ -47,11 +47,11 @@ def handle_domain(string: str):
     if message.strip().replace('  ', ' ').endswith('.mkv') or message.strip().replace('  ', ' ').endswith('.mp4'):
         message2 = message.strip().replace('.mkv', '').replace('.mp4', '').split(' ')[-1]
         if '.' in message2:
-            return message.strip().replace(message2, ' ').replace('  ', ' ').replace('  ', ' ').strip()
+            return message.strip().replace(message2, ' ').replace('  ', ' ').replace('  ', ' ').replace(r'[MovieFD]', '').strip()
         else:
-           return message.strip().replace('  ', ' ').strip()
+           return message.strip().replace('  ', ' ').replace(r'[MovieFD]', '').strip()
     else:
-        return message.strip().replace('  ', ' ') + '.mkv'
+        return message.strip().replace('  ', ' ').replace(r'[MovieFD]', '') + '.mkv'
 
 
 
