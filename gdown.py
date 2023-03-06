@@ -91,7 +91,7 @@ for arg in args.links:
         pixeldrain = subprocess.check_output(["curl", "-F", files, server])
         pixel_link = json.loads(pixeldrain.decode())["data"]["downloadPage"]
         print("Uploading gdrive", name)
-        onedrive = subprocess.check_output(['rclone', 'copy', name, 'one:Public/2023/Feb/' + date.today().strftime('%d')])
+       # onedrive = subprocess.check_output(['rclone', 'copy', name, 'one:Public/2023/Feb/' + date.today().strftime('%d')])
         # onedrive
         # pixel_link
         # print(pixel_link)
