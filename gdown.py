@@ -86,12 +86,13 @@ for arg in args.links:
                 pass
         server = f"https://{server_p}.gofile.io/uploadFile"
         files = f"file=@{name}"
-        token = "token=nrjNg7USiVmujjHkXYlDq9RYOvAnDL7S"
+#         token = "token=nrjNg7USiVmujjHkXYlDq9RYOvAnDL7S"
         #pixeldrain = subprocess.check_output(["curl", "-F", files, "-F", token, server])
         pixeldrain = subprocess.check_output(["curl", "-F", files, server])
         pixel_link = json.loads(pixeldrain.decode())["data"]["downloadPage"]
         datetim = date.today().strftime('%Y/%b/%d')
         print("Uploading gdrive", name)
+#         onedrive = subprocess.check_output(['rclone', 'copy', "--transfer=6", "--ignore-checksum" ,"--ignore-size", name, f'one:Public/{datetim}'])
         onedrive = subprocess.check_output(['rclone', 'copy', name, f'one:Public/{datetim}'])
         # onedrive
         # pixel_link
