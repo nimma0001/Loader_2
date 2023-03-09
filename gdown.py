@@ -90,8 +90,9 @@ for arg in args.links:
         #pixeldrain = subprocess.check_output(["curl", "-F", files, "-F", token, server])
         pixeldrain = subprocess.check_output(["curl", "-F", files, server])
         pixel_link = json.loads(pixeldrain.decode())["data"]["downloadPage"]
+        datetim = date.today().strftime('%Y/%b/%d')
         print("Uploading gdrive", name)
-        onedrive = subprocess.check_output(['rclone', 'copy', name, 'one:Public/2023/Feb/' + date.today().strftime('%d')])
+        onedrive = subprocess.check_output(['rclone', 'copy', name, f'one:Public/{datetim}'])
         # onedrive
         # pixel_link
         # print(pixel_link)
@@ -109,8 +110,8 @@ for arg in args.links:
         # elif '1080p' in name:
         #     all_links[name[:6]][1080] = data
         # try:
-        datetim = date.today().strftime('%Y/%d/%b')
-        onelink = f"https://allinonepaid.vercel.app/Public/{date}/"
+        
+        onelink = f"https://allinonepaid.vercel.app/Public/{datetim}/"
         if '480p' in name:
             all_link[name[:6].lower().strip()] = all_link[name[:6].lower().strip()].replace('480_r', f'{pixel_link}')
             all_link[name[:6].lower().strip()] = all_link[name[:6].lower().strip()].replace('480p_r', onelink+name.replace(' ', '%20'))
