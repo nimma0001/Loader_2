@@ -109,15 +109,17 @@ for arg in args.links:
         # elif '1080p' in name:
         #     all_links[name[:6]][1080] = data
         # try:
+        datetim = date.today().strftime('%Y/%d/%b')
+        onelink = f"https://allinonepaid.vercel.app/Public/{date}/"
         if '480p' in name:
             all_link[name[:6].lower().strip()] = all_link[name[:6].lower().strip()].replace('480_r', f'{pixel_link}')
-            all_link[name[:6].lower().strip()] = all_link[name[:6].lower().strip()].replace('480p_r', 'https://allinonepaid.vercel.app/Public/2023/Feb/'+date.today().strftime('%d')+'/'+name.replace(' ', '%20'))
+            all_link[name[:6].lower().strip()] = all_link[name[:6].lower().strip()].replace('480p_r', onelink+name.replace(' ', '%20'))
         if '720p' in name:
             all_link[name[:6].lower().strip()] = all_link[name[:6].lower().strip()].replace('720_r', f'{pixel_link}')
-            all_link[name[:6].lower().strip()] = all_link[name[:6].lower().strip()].replace('720p_r', 'https://allinonepaid.vercel.app/Public/2023/Feb/'+date.today().strftime('%d')+'/'+name.replace(' ', '%20'))
+            all_link[name[:6].lower().strip()] = all_link[name[:6].lower().strip()].replace('720p_r', onelink+name.replace(' ', '%20'))
         if '1080p' in name:
             all_link[name[:6].lower().strip()] = all_link[name[:6].lower().strip()].replace('1080_r', f'{pixel_link}')
-            all_link[name[:6].lower().strip()] = all_link[name[:6].lower().strip()].replace('1080p_r', 'https://allinonepaid.vercel.app/Public/2023/Feb/'+date.today().strftime('%d')+'/'+name.replace(' ', '%20'))
+            all_link[name[:6].lower().strip()] = all_link[name[:6].lower().strip()].replace('1080p_r', onelink+name.replace(' ', '%20'))
     except Exception as e:
         print(e)
     try:
