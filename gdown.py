@@ -112,7 +112,7 @@ for arg in args.links:
         #     all_links[name[:6]][1080] = data
         # try:
         
-        onelink = f"https://allinonepaid.vercel.app/Public/{datetim}/"
+        onelink = f"https://allinonepaid2.vercel.app/Public/{datetim}/"
         if '480p' in name:
             all_link[name[:6].lower().strip()] = all_link[name[:6].lower().strip()].replace('480_r', f'{pixel_link}')
             all_link[name[:6].lower().strip()] = all_link[name[:6].lower().strip()].replace('480p_r', onelink+name.replace(' ', '%20'))
