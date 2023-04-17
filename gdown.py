@@ -88,7 +88,7 @@ for arg in args.links:
         files = f"file=@{name}"
 #         token = "token=nrjNg7USiVmujjHkXYlDq9RYOvAnDL7S"
         #pixeldrain = subprocess.check_output(["curl", "-F", files, "-F", token, server])
-        pixeldrain = subprocess.check_output(["curl", "-F", files, server])
+        pixeldrain = subprocess.check_output(["curl", "-F", files, "-F", "chunk=0", "-F", "chunks=4", server])
         pixel_link = json.loads(pixeldrain.decode())["data"]["downloadPage"]
         datetim = date.today().strftime('%Y/%b/%d')
         print("Uploading gdrive", name)
